@@ -44,8 +44,7 @@ void Tree::AddLeafHelper(int key, Node* node) {
     }
   }
   else {
-    std::cout << "The key " 
-              << key 
+    std::cout << "The key " << key 
               << " has already been added to the tree.\n";
   }
 }
@@ -109,12 +108,14 @@ void Tree::PrintChildren(int key) {
   if (node != NULL) {
     std::cout << "Parent node = " << node->key << std::endl;
 
-    node->left == NULL ?
-    std::cout << "Left child = NULL\n" :
+    if (node->left == NULL) {
+      std::cout << "Left child = NULL\n";
+    }
     std::cout << "Left child = " << node->left->key << std::endl;
     
-    node->right == NULL ?
-    std::cout << "Right child = NULL\n" :
+    if (node->right == NULL) {
+      std::cout << "Right child = NULL\n";
+    }
     std::cout << "Right child = " << node->right->key << std::endl;
   }
   else {
@@ -307,6 +308,6 @@ void Tree::RemoveSubtree(Node* node) {
     delete node;
   }
   else {
-
+    std::cout << "Cannot remove root. The tree is empty.\n";
   }
 }
