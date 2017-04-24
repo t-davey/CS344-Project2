@@ -3,7 +3,7 @@
 #include "tree.h"
 
 Tree::Tree() {
-  root = NULL;
+  root = nullptr;
 }
 
 Tree::~Tree() {
@@ -13,8 +13,8 @@ Tree::~Tree() {
 Tree::Node* Tree::CreateLeaf(int key) {
   Node* node  = new Node;
   node->key   = key;
-  node->left  = NULL;
-  node->right = NULL;
+  node->left  = nullptr;
+  node->right = nullptr;
 
   return node;
 }
@@ -24,11 +24,11 @@ void Tree::AddLeaf(int key) {
 }
 
 void Tree::AddLeafHelper(int key, Node* node) {
-  if (root == NULL) {
+  if (root == nullptr) {
     root = CreateLeaf(key);
   }
   else if (key < node->key) {
-    if (node->left != NULL) {
+    if (node->left != nullptr) {
       AddLeafHelper(key, node->left);
     }
     else {
@@ -36,7 +36,7 @@ void Tree::AddLeafHelper(int key, Node* node) {
     }
   }
   else if (key > node->key) {
-    if (node->right != NULL) {
+    if (node->right != nullptr) {
       AddLeafHelper(key, node->right);
     }
     else {
@@ -54,12 +54,12 @@ void Tree::PrintInOrder() {
 }
 
 void Tree::PrintInOrderHelper(Node* node) {
-  if (root != NULL) {
-    if (node->left != NULL) {
+  if (root != nullptr) {
+    if (node->left != nullptr) {
       PrintInOrderHelper(node->left);
     }
     std::cout << node->key << " ";
-    if (node->right != NULL) {
+    if (node->right != nullptr) {
       PrintInOrderHelper(node->right);
     }
   }
@@ -75,7 +75,7 @@ Tree::Node* Tree::ReturnNode(int key) {
 
 /* find helper */
 Tree::Node* Tree::ReturnNodeHelper(int key, Node* node) {
-  if (node != NULL) {
+  if (node != nullptr) {
     if (node->key == key) {
       return node;
     }
@@ -89,12 +89,12 @@ Tree::Node* Tree::ReturnNodeHelper(int key, Node* node) {
     }
   }
   else {
-    return NULL;
+    return nullptr;
   }
 }
 
 int Tree::ReturnRootKey() {
-  if (root != NULL) {
+  if (root != nullptr) {
     return root->key;
   }
   else {
@@ -105,17 +105,15 @@ int Tree::ReturnRootKey() {
 void Tree::PrintChildren(int key) {
   Node* node = ReturnNode(key);
 
-  if (node != NULL) {
+  if (node != nullptr) {
     std::cout << "Parent node = " << node->key << std::endl;
 
-    if (node->left == NULL) {
-      std::cout << "Left child = NULL\n";
-    }
+    node->left == nullptr ?
+    std::cout << "Left child = nullptr\n" :
     std::cout << "Left child = " << node->left->key << std::endl;
     
-    if (node->right == NULL) {
-      std::cout << "Right child = NULL\n";
-    }
+    node->right == nullptr ?
+    std::cout << "Right child = nullptr\n" :
     std::cout << "Right child = " << node->right->key << std::endl;
   }
   else {
@@ -128,13 +126,13 @@ int Tree::FindSmallest() {
 }
 
 int Tree::FindSmallestHelper(Node* node) {
-  if (root == NULL) {
+  if (root == nullptr) {
     std::cout << "The tree is empty.\n";
 
     return -1000; //might need to be changed
   }
   else {
-    if (node->left != NULL) {
+    if (node->left != nullptr) {
       return FindSmallestHelper(node->left);
     }
     else {
@@ -148,12 +146,12 @@ void Tree::RemoveNode(int key) {
 }
 
 void Tree::RemoveNodeHelper(int key, Node* parent) {
-  if (root != NULL) {
+  if (root != nullptr) {
     if (root->key == key) {
       RemoveRootMatch();
     }
     else {
-      if (key < parent->key && parent->left != NULL) {
+      if (key < parent->key && parent->left != nullptr) {
         if (parent->left->key == key) {
           RemoveMatch(parent, parent->left, true);
         }
@@ -161,7 +159,7 @@ void Tree::RemoveNodeHelper(int key, Node* parent) {
           RemoveNodeHelper(key, parent->left);
         }
       }
-      else if (key > parent->key && parent->right != NULL) {
+      else if (key > parent->key && parent->right != nullptr) {
         if (parent->right->key == key) {
           RemoveMatch(parent, parent->right, false);
         }
@@ -180,22 +178,22 @@ void Tree::RemoveNodeHelper(int key, Node* parent) {
 }
 
 void Tree::RemoveRootMatch() {
-  if (root != NULL) {
+  if (root != nullptr) {
     Node* delNode = root;
     int   rootKey = root->key;
     int   smallestInRightSubTree;
 
     // Case 1 - 0 children
-    if (root->left == NULL && root->right == NULL) {
-      root = NULL;
+    if (root->left == nullptr && root->right == nullptr) {
+      root = nullptr;
       delete delNode;
     }
 
     // Case 2 - 1 child
-    else if (root->left == NULL && root->right != NULL) {
+    else if (root->left == nullptr && root->right != nullptr) {
       root = root->right;
 
-      delNode->right = NULL;
+      delNode->right = nullptr;
       delete delNode;
 
       std::cout << "The root node with key " 
@@ -203,10 +201,10 @@ void Tree::RemoveRootMatch() {
                 << "The new root contains key "
                 << root->key << std::endl;
     }
-    else if (root->left != NULL && root->right == NULL) {
+    else if (root->left != nullptr && root->right == nullptr) {
       root = root->left;
 
-      delNode->left = NULL;
+      delNode->left = nullptr;
       delete delNode;
 
       std::cout << "The root node with key " 
@@ -232,19 +230,19 @@ void Tree::RemoveRootMatch() {
 }
 
 void Tree::RemoveMatch(Node* parent, Node* match, bool isLeft) {
-  if (root != NULL) {
+  if (root != nullptr) {
     Node* delNode;
     int   matchKey = match->key;
     int   smallestInRightSubtree;
 
     // Case 1 - 0 children
-    if (match->left == NULL && match->right == NULL) {
+    if (match->left == nullptr && match->right == nullptr) {
       delNode = match;
       if (isLeft == true) {
-        parent->left = NULL;
+        parent->left = nullptr;
       }
       else {
-        parent->right = NULL;
+        parent->right = nullptr;
       }
 
       delete delNode;
@@ -253,7 +251,7 @@ void Tree::RemoveMatch(Node* parent, Node* match, bool isLeft) {
     }
 
     // Case 2 - 1 child
-    else if (match->left == NULL && match->right != NULL) {
+    else if (match->left == nullptr && match->right != nullptr) {
       if (isLeft == true) {
         parent->left = match->right;
       }
@@ -261,14 +259,14 @@ void Tree::RemoveMatch(Node* parent, Node* match, bool isLeft) {
         parent->right = match->right;
       }
 
-      match->right = NULL;
+      match->right = nullptr;
       delNode = match;
 
       delete delNode;
       std::cout << "The node containing key " << matchKey
                 << " was removed.\n";
     }
-    else if (match->left != NULL && match->right == NULL) {
+    else if (match->left != nullptr && match->right == nullptr) {
       if (isLeft == true) {
         parent->left = match->left;
       }
@@ -276,7 +274,7 @@ void Tree::RemoveMatch(Node* parent, Node* match, bool isLeft) {
         parent->right = match->left;
       }
 
-      match->right = NULL;
+      match->right = nullptr;
       delNode = match;
 
       delete delNode;
@@ -295,19 +293,78 @@ void Tree::RemoveMatch(Node* parent, Node* match, bool isLeft) {
   } 
 }
 
-void Tree::RemoveSubtree(Node* node) {
-  if (node != NULL) {
-    if (node->left != NULL) {
+void Tree::RemoveSubtree(NodePtr& node) {
+  if (node != nullptr) {
+    if (node->left != nullptr) {
       RemoveSubtree(node->left);
     }
-    if (node->right != NULL) {
+    if (node->right != nullptr) {
       RemoveSubtree(node->right);
     }
 
     std::cout << "Deleting the node containing key " << node->key << std::endl;
     delete node;
+    node = nullptr;
   }
   else {
-    std::cout << "Cannot remove root. The tree is empty.\n";
+
+  }
+}
+
+int Tree::FindNode(int key) {
+  return FindNodeHelper(key, root);
+}
+
+int Tree::FindNodeHelper(int key, Node* node) {
+  if (node != nullptr) {
+    while (node != nullptr && node->key != key) {
+      if (key < node->key) {
+        node = node->left;
+      }
+      else {
+        node = node->right;
+      }
+    }
+    /* uhhhhhhhhh... seg faults. this fixes it */
+    if (node != nullptr) {
+      std::cout << node->key << " was found." << std::endl;
+      return node->key; 
+    }
+    else {
+      std::cout << key << " was not found." << std::endl;
+      return -1000; //might need to be changed
+    } 
+  }
+  else {
+    std::cout << "The tree is empty." << std::endl;
+    return -1000; //might need to be changed
+  }
+}
+
+void Tree::ClearTree() {
+  RemoveSubtree(root);
+}
+
+int Tree::size() {
+  return sizeHelper(root);
+}
+
+int Tree::sizeHelper(Node *node) {
+    if (node != nullptr) {
+      return (sizeHelper(node->left) + 1 + sizeHelper(node->right));
+    }
+    else {
+      return 0;
+    }
+}
+
+bool Tree::isEmpty() {
+  if (root == nullptr) {
+    std::cout << "The tree is empty." << std::endl;
+    return true;
+  }
+  else {
+    std::cout << "The tree is not empty." << std::endl;
+    return false;
   }
 }

@@ -7,6 +7,8 @@ int main(int argc, char **argv) {
   Tree tree;
   int input;
 
+  tree.isEmpty();
+
   std::cout << "Printing the tree in order.\nBefore adding numbers.\n";
 
   tree.PrintInOrder();
@@ -15,6 +17,8 @@ int main(int argc, char **argv) {
     tree.AddLeaf(treeKeys[i]);
   }
 
+  tree.isEmpty();
+
   std::cout << "Printing the tree in order.\nAfter adding numbers.\n";
 
   tree.PrintInOrder();
@@ -22,6 +26,7 @@ int main(int argc, char **argv) {
   std::cout << std::endl;
 
   /*
+  //print each node's children debug
   for (int i = 0; i < 16; i++) {
     tree.PrintChildren(treeKeys[i]);
     std::cout << std::endl;
@@ -31,7 +36,14 @@ int main(int argc, char **argv) {
             << tree.FindSmallest() << std::endl;
   */
 
-  
+  tree.FindNode(1);
+  tree.FindNode(52);
+  std:: cout << "The tree has " << tree.size() 
+             << " nodes." <<std::endl;
+  tree.ClearTree();
+
+  /*
+  //delete nodes test
   while (input != -1) {
     std::cout << "Delete node: ";
     std::cin  >> input;
@@ -44,6 +56,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  */
 
   return 0;
 }

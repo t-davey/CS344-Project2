@@ -6,6 +6,8 @@ class Tree {
       Node* right;
     };
 
+    typedef Node* NodePtr; //avoids *&/** weirdness - called in RemoveSubtree
+    
     Node* root;
 
     Node* CreateLeaf(int key);    
@@ -17,7 +19,10 @@ class Tree {
     void  RemoveRootMatch();
     void  RemoveMatch(Node* parent, Node* match, bool isLeft);
     Node* ReturnNode(int key); //find
-    void  RemoveSubtree(Node* node);
+    void  RemoveSubtree(NodePtr& node);
+    int   FindNodeHelper(int key, Node* node);
+    void  SwapNodes(int key, int swap, Node* node); //not implemented
+    int   sizeHelper(Node* node);
 
   public:
     Tree();
@@ -29,4 +34,11 @@ class Tree {
     void  PrintChildren(int key);
     int   FindSmallest();
     void  RemoveNode(int key);
+    int   FindNode(int key);
+    void  SwapNodes(int key, int swap); //not implemented
+    void  ClearTree();
+    int   size();
+    bool  isEmpty();
+    void  begin(); //not implemented
+    void  end();   //not implemented
 };
