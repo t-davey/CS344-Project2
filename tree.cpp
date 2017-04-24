@@ -295,19 +295,12 @@ void Tree::RemoveMatch(Node* parent, Node* match, bool isLeft) {
 
 void Tree::RemoveSubtree(NodePtr& node) {
   if (node != nullptr) {
-    if (node->left != nullptr) {
-      RemoveSubtree(node->left);
-    }
-    if (node->right != nullptr) {
-      RemoveSubtree(node->right);
-    }
+    RemoveSubtree(node->left);
+    RemoveSubtree(node->right);
 
     std::cout << "Deleting the node containing key " << node->key << std::endl;
     delete node;
     node = nullptr;
-  }
-  else {
-
   }
 }
 
