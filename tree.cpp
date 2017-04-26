@@ -6,7 +6,6 @@ Tree::Tree() {
   root = nullptr;
 }
 
-/*
 Tree::~Tree() {
   RemoveSubtree(root);
 }
@@ -359,4 +358,3 @@ bool Tree::isEmpty() {
     return false;
   }
 }
-*/

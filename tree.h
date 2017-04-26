@@ -7,11 +7,10 @@ class Tree {
       Node* right;
     };
 
-    //typedef Node* NodePtr; //avoids *&/** weirdness - called in RemoveSubtree
+    typedef Node* NodePtr; //avoids *&/** weirdness - called in RemoveSubtree
 
     Node* root;
 
-    /*
     Node* CreateLeaf(int key);
     void  AddLeafHelper(int key, Node* node);
     void  PrintInOrderHelper(Node* node);
@@ -25,13 +24,11 @@ class Tree {
     int   FindNodeHelper(int key, Node* node);
     void  SwapNodes(int key, int swap, Node* node); //not implemented
     int   sizeHelper(Node* node);
-    */
 
   public:
     Tree();
-    //~Tree();
+    ~Tree();
 
-    /*
     void  AddLeaf(int key);
     void  PrintInOrder();
     int   ReturnRootKey();
@@ -45,5 +42,4 @@ class Tree {
     bool  isEmpty();
     void  begin(); //not implemented
     void  end();   //not implemented
-    */
 };
