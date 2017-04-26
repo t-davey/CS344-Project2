@@ -6,6 +6,7 @@ Tree::Tree() {
   root = nullptr;
 }
 
+/*
 Tree::~Tree() {
   RemoveSubtree(root);
 }
@@ -44,7 +45,7 @@ void Tree::AddLeafHelper(int key, Node* node) {
     }
   }
   else {
-    std::cout << "The key " << key 
+    std::cout << "The key " << key
               << " has already been added to the tree.\n";
   }
 }
@@ -68,12 +69,10 @@ void Tree::PrintInOrderHelper(Node* node) {
   }
 }
 
-/* find */
 Tree::Node* Tree::ReturnNode(int key) {
   return ReturnNodeHelper(key, root);
 }
 
-/* find helper */
 Tree::Node* Tree::ReturnNodeHelper(int key, Node* node) {
   if (node != nullptr) {
     if (node->key == key) {
@@ -111,7 +110,7 @@ void Tree::PrintChildren(int key) {
     node->left == nullptr ?
     std::cout << "Left child = nullptr\n" :
     std::cout << "Left child = " << node->left->key << std::endl;
-    
+
     node->right == nullptr ?
     std::cout << "Right child = nullptr\n" :
     std::cout << "Right child = " << node->right->key << std::endl;
@@ -196,7 +195,7 @@ void Tree::RemoveRootMatch() {
       delNode->right = nullptr;
       delete delNode;
 
-      std::cout << "The root node with key " 
+      std::cout << "The root node with key "
                 << rootKey << " was deleted. "
                 << "The new root contains key "
                 << root->key << std::endl;
@@ -207,7 +206,7 @@ void Tree::RemoveRootMatch() {
       delNode->left = nullptr;
       delete delNode;
 
-      std::cout << "The root node with key " 
+      std::cout << "The root node with key "
                 << rootKey << " was deleted. "
                 << "The new root contains key "
                 << root->key << std::endl;
@@ -219,7 +218,7 @@ void Tree::RemoveRootMatch() {
       RemoveNodeHelper(smallestInRightSubTree, root);
       root->key = smallestInRightSubTree;
 
-      std::cout << "The root key containing key " 
+      std::cout << "The root key containing key "
                 << rootKey << " was overwritten with key "
                 << root->key << std::endl;
     }
@@ -290,7 +289,7 @@ void Tree::RemoveMatch(Node* parent, Node* match, bool isLeft) {
   }
   else {
     std::cout << "Cannot remove root. The tree is empty.\n";
-  } 
+  }
 }
 
 void Tree::RemoveSubtree(NodePtr& node) {
@@ -318,15 +317,14 @@ int Tree::FindNodeHelper(int key, Node* node) {
         node = node->right;
       }
     }
-    /* uhhhhhhhhh... seg faults. this fixes it */
     if (node != nullptr) {
       std::cout << node->key << " was found." << std::endl;
-      return node->key; 
+      return node->key;
     }
     else {
       std::cout << key << " was not found." << std::endl;
       return -1000; //might need to be changed
-    } 
+    }
   }
   else {
     std::cout << "The tree is empty." << std::endl;
@@ -361,3 +359,4 @@ bool Tree::isEmpty() {
     return false;
   }
 }
+*/
