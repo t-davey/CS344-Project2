@@ -7,7 +7,7 @@ class Tree {
       Node* right;
     };
 
-    typedef Node* NodePtr; //avoids *&/** weirdness - called in RemoveSubtree
+    typedef Node* NodePtr; //avoids &*/** weirdness - called in RemoveSubtree
 
     Node* root;
 
@@ -17,12 +17,9 @@ class Tree {
     Node* ReturnNodeHelper(int key, Node* node); //find helper
     int   FindSmallestHelper(Node* node);
     void  RemoveNodeHelper(NodePtr& n, NodePtr& node);
-    void  RemoveRootMatch();
-    void  RemoveMatch(Node* parent, Node* match, bool isLeft);
     Node* ReturnNode(int key); //find
     void  RemoveSubtree(NodePtr& node);
     int   FindNodeHelper(int key, Node* node);
-    void  SwapNodes(int key, int swap, Node* node); //not implemented
     int   sizeHelper(Node* node);
     void  ReplaceSubtreeHelper(NodePtr& u, NodePtr& v, NodePtr& node);
     Node* getNodeHelper(int key, Node* node);
