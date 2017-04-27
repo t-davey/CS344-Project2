@@ -25,7 +25,6 @@ int main(int argc, char **argv) {
 
   std::cout << std::endl;
 
-  /*
   //print each node's children debug
   for (int i = 0; i < 16; i++) {
     tree.PrintChildren(treeKeys[i]);
@@ -34,7 +33,6 @@ int main(int argc, char **argv) {
 
   std::cout << "The smallest value ion the tree is "
             << tree.FindSmallest() << std::endl;
-  */
 
   tree.FindNode(1);
   tree.FindNode(52);

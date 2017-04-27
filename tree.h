@@ -24,6 +24,7 @@ class Tree {
     int   FindNodeHelper(int key, Node* node);
     void  SwapNodes(int key, int swap, Node* node); //not implemented
     int   sizeHelper(Node* node);
+    void  ReplaceSubtreeHelper(int u, int v, Node* node);
 
   public:
     Tree();
@@ -37,6 +38,7 @@ class Tree {
     void  RemoveNode(int key);
     int   FindNode(int key);
     void  SwapNodes(int key, int swap); //not implemented
+    void  ReplaceSubtree(int u, int v);
     void  ClearTree();
     int   size();
     bool  isEmpty();

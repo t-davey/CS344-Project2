@@ -23,31 +23,43 @@ void Tree::AddLeaf(int key) {
   AddLeafHelper(key, root);
 }
 
+//key is z
+//node was root
 void Tree::AddLeafHelper(int key, Node* node) {
   if (root == nullptr) {
     root = CreateLeaf(key);
   }
-  else if (key < node->key) {
-    if (node->left != nullptr) {
-      AddLeafHelper(key, node->left);
-    }
-    else {
-       node->left = CreateLeaf(key);
-    }
-  }
-  else if (key > node->key) {
-    if (node->right != nullptr) {
-      AddLeafHelper(key, node->right);
-    }
-    else {
-       node->right = CreateLeaf(key);
-    }
-  }
   else {
-    std::cout << "The key " << key
-              << " has already been added to the tree.\n";
+      bool done = false;
+      Node* q = node;
+
+      while(!done) {
+        if (key < q->key) {
+          if (q->left == nullptr) {
+            q->left = CreateLeaf(key);
+            q->left->parent = q; //z->parent = q in psuedocode
+            std::cout << q->key << " is " << q->left->key << "'s parent" << '\n';
+            done = true;
+          }
+          else {
+            q = q->left;
+          }
+        }
+        else {
+          if (q->right == nullptr) {
+            q->right = CreateLeaf(key);
+            q->right->parent = q;
+            std::cout << q->key << " is " << q->right->key << "'s parent" << '\n';
+            done = true;
+          }
+          else {
+            q = q->right;
+        }
+      }
+    }
   }
 }
+
 
 void Tree::PrintInOrder() {
   PrintInOrderHelper(root);
@@ -144,6 +156,7 @@ void Tree::RemoveNode(int key) {
 }
 
 void Tree::RemoveNodeHelper(int key, Node* parent) {
+/*
   if (root != nullptr) {
     if (root->key == key) {
       RemoveRootMatch();
@@ -173,6 +186,15 @@ void Tree::RemoveNodeHelper(int key, Node* parent) {
   else {
     std::cout << "The tree is empty.\n";
   }
+  */
+}
+
+void Tree::ReplaceSubtree(int u, int v) {
+  
+}
+
+void  Tree::ReplaceSubtreeHelper(int u, int v, Node* node) {
+
 }
 
 void Tree::RemoveRootMatch() {
@@ -316,6 +338,7 @@ int Tree::FindNodeHelper(int key, Node* node) {
         node = node->right;
       }
     }
+    //avoid segfaults
     if (node != nullptr) {
       std::cout << node->key << " was found." << std::endl;
       return node->key;
