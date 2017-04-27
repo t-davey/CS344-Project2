@@ -1,3 +1,9 @@
+#ifndef TREE_H
+#define TREE_H
+
+#include <utility>
+
+template <class Key, class Element>
 class Tree {
   private:
     struct Node {
@@ -31,17 +37,15 @@ class Tree {
 
     void  AddLeaf(int key);
     void  PrintInOrder();
-    int   ReturnRootKey();
     void  PrintChildren(int key);
     int   FindSmallest();
     void  RemoveNode(int key);
     int   FindNode(int key);
-    void  SwapNodes(int key, int swap); //not implemented
     void  ReplaceSubtree(int u, int v);
     Node* getNode(int key);
     void  ClearTree();
     int   size();
     bool  isEmpty();
-    void  begin(); //not implemented
-    void  end();   //not implemented
 };
+
+#endif
