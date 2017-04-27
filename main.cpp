@@ -38,7 +38,18 @@ int main(int argc, char **argv) {
   tree.FindNode(52);
   std:: cout << "The tree has " << tree.size()
              << " nodes." <<std::endl;
-  tree.ClearTree();
+  //tree.ClearTree();
+
+  tree.RemoveNode(50);
+  //tree.ReplaceSubtree(76, 64);
+
+  for (int i = 0; i < 16; i++) {
+    tree.PrintChildren(treeKeys[i]);
+    std::cout << std::endl;
+  }
+
+  //tree.PrintInOrder();
+
 
   /*
   //delete nodes test

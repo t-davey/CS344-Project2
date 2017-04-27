@@ -16,7 +16,7 @@ class Tree {
     void  PrintInOrderHelper(Node* node);
     Node* ReturnNodeHelper(int key, Node* node); //find helper
     int   FindSmallestHelper(Node* node);
-    void  RemoveNodeHelper(int key, Node* parent);
+    void  RemoveNodeHelper(NodePtr& n, NodePtr& node);
     void  RemoveRootMatch();
     void  RemoveMatch(Node* parent, Node* match, bool isLeft);
     Node* ReturnNode(int key); //find
@@ -24,7 +24,9 @@ class Tree {
     int   FindNodeHelper(int key, Node* node);
     void  SwapNodes(int key, int swap, Node* node); //not implemented
     int   sizeHelper(Node* node);
-    void  ReplaceSubtreeHelper(int u, int v, Node* node);
+    void  ReplaceSubtreeHelper(NodePtr& u, NodePtr& v, NodePtr& node);
+    Node* getNodeHelper(int key, Node* node);
+    Node* min(Node* node);
 
   public:
     Tree();
@@ -39,6 +41,7 @@ class Tree {
     int   FindNode(int key);
     void  SwapNodes(int key, int swap); //not implemented
     void  ReplaceSubtree(int u, int v);
+    Node* getNode(int key);
     void  ClearTree();
     int   size();
     bool  isEmpty();
