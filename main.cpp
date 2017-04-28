@@ -1,51 +1,36 @@
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 #include "tree.cpp"
 
 using std::string;
 using std::pair;
 
 int main(int argc, char **argv) {
-  Tree<int,string> tree;
-  int input;
+  Tree<int, int> tree;
+  srand(time(NULL));
 
   tree.FindNode(1);
 
   tree.isEmpty();
   std::cerr << "The tree has " << tree.size() << " nodes.\n";
 
-  pair<int, string> p0(5,"5");
-  pair<int, string> p1(55,"5");
+  int a[10];
+  for (int i = 0; i < 10; i++) {
+    a[i] = rand() % 100;
+  }
 
-  tree.AddLeaf(p0);
-  std::cerr << "The tree has " << tree.size() << " nodes.\n";
+  for (int i = 0; i < 10; i++) {
+    std::cerr << a[i] << '\n';
+  }
 
-  tree.AddLeaf(p1);
-  std::cerr << "The tree has " << tree.size() << " nodes.\n";
+  for (int i = 0; i < 10; i++) {
+    tree.AddLeaf(pair<int, int>(a[i], i));
+  }
 
-  tree.PrintInOrder();
-  std::cerr << '\n';
-
-
-  tree.AddLeaf(p1);
-
-  std::cerr << "The tree has " << tree.size() << " nodes.\n";
-
-  tree.PrintInOrder();
-  std::cerr << '\n';
-
-  tree.FindNode(5);
-
-  tree.ReplaceSubtree(5, 55);
-
-  tree.RemoveNode(55);
-
-  tree.getNode(5);
-
-  tree.size();
-
-  tree.ClearTree();
-
+  for (int i = 0; i < 10; i++) {
+    tree.NodeDebug(a[i]);
+  }
 
   return 0;
 }

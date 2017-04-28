@@ -21,7 +21,6 @@ class Tree {
     void  AddLeafHelper(std::pair<Key, Element> key, Node* node);
     void  PrintInOrderHelper(Node* node);
     Node* ReturnNodeHelper(Key key, Node* node); //find helper
-    // Key   FindSmallestHelper(Node* node);
     void  RemoveNodeHelper(NodePtr& n, NodePtr& node);
     Node* ReturnNode(Key key); //find
     void  RemoveSubtree(NodePtr& node);
@@ -30,15 +29,15 @@ class Tree {
     void  ReplaceSubtreeHelper(NodePtr& u, NodePtr& v, NodePtr& node);
     Node* getNodeHelper(Key key, Node* node);
     Node* min(Node* node);
+    void  NodeDebugHelper(Key key, Node* node);
 
   public:
     Tree();
     ~Tree();
 
+    void  NodeDebug(Key key);
     void  AddLeaf(std::pair<Key, Element> key);
     void  PrintInOrder();
-    void  PrintChildren(Key key);
-    // int   FindSmallest();
     void  RemoveNode(Key key);
     Key   FindNode(Key key);
     void  ReplaceSubtree(Key u, Key v);

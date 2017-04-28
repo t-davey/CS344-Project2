@@ -79,6 +79,7 @@ void Tree<Key, Element>::AddLeafHelper(std::pair<Key, Element> key, Node* node) 
             q->left = CreateLeaf(key);
             q->left->parent = q; //z->parent = q in psuedocode
             std::cerr << q->key.first << " is " << q->left->key.first << "'s parent" << '\n';
+            //std::cerr << q->left->key.first << " is " << q->key.first << "'s parent" << '\n';
             done = true;
           }
           else {
@@ -148,27 +149,44 @@ typename Tree<Key,Element>::Node* Tree<Key,Element>::ReturnNodeHelper(Key key, N
   }
 }
 
-/* from video, debug */
 template <class Key, class Element>
-void Tree<Key,Element>::PrintChildren(Key key) {
-  Node* node = ReturnNode(key);
+void Tree<Key, Element>::NodeDebug(Key key) {
+  Node* node = getNode(key);
 
-  if (node != nullptr) {
-    std::cerr << "Parent node = " << node->key.first << std::endl;
-
-    node->left == nullptr ?
-    std::cerr << "Left child = nullptr\n" :
-    std::cerr << "Left child = " << node->left->key.first << std::endl;
-
-    node->right == nullptr ?
-    std::cerr << "Right child = nullptr\n" :
-    std::cerr << "Right child = " << node->right->key.first << std::endl;
-  }
-  else {
-    std::cerr << "Key " << key << " is not in the tree.\n";
-  }
+  NodeDebugHelper(key, node);
 }
 
+template <class Key, class Element>
+void Tree<Key, Element>::NodeDebugHelper(Key key, Node* node) {
+  if (node->parent != nullptr) {
+    std::cerr << "Parent: " << node->parent->key.first << '\n';
+  }
+  else {
+    std::cerr << "Parent: nullptr" << '\n';
+  }
+
+  if (node != nullptr) {
+    std::cerr << "Current: " << node->key.first << '\n';
+  }
+  else {
+    std::cerr << "Current: nullptr" << '\n';
+  }
+
+  if (node->left != nullptr) {
+    std::cerr << "Left: " << node->left->key.first << '\n';
+  }
+  else {
+    std::cerr << "Left: nullptr" << '\n';
+  }
+
+  if (node->right != nullptr) {
+    std::cerr << "Right: " << node->right->key.first << '\n';
+  }
+  else {
+    std::cerr << "Right: nullptr" << '\n';
+  }
+  std::cerr << '\n';
+}
 
 /*
 template <class Key, class Element>
