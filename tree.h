@@ -7,7 +7,7 @@ template <class Key, class Element>
 class Tree {
   private:
     struct Node {
-      int key;
+      std::pair<Key, Element> key;
       Node* parent;
       Node* left;
       Node* right;
@@ -17,32 +17,32 @@ class Tree {
 
     Node* root;
 
-    Node* CreateLeaf(int key);
-    void  AddLeafHelper(int key, Node* node);
+    Node* CreateLeaf(std::pair<Key, Element> key);
+    void  AddLeafHelper(std::pair<Key, Element> key, Node* node);
     void  PrintInOrderHelper(Node* node);
-    Node* ReturnNodeHelper(int key, Node* node); //find helper
-    int   FindSmallestHelper(Node* node);
+    Node* ReturnNodeHelper(Key key, Node* node); //find helper
+    // Key   FindSmallestHelper(Node* node);
     void  RemoveNodeHelper(NodePtr& n, NodePtr& node);
-    Node* ReturnNode(int key); //find
+    Node* ReturnNode(Key key); //find
     void  RemoveSubtree(NodePtr& node);
-    int   FindNodeHelper(int key, Node* node);
+    Key   FindNodeHelper(Key key, Node* node);
     int   sizeHelper(Node* node);
     void  ReplaceSubtreeHelper(NodePtr& u, NodePtr& v, NodePtr& node);
-    Node* getNodeHelper(int key, Node* node);
+    Node* getNodeHelper(Key key, Node* node);
     Node* min(Node* node);
 
   public:
     Tree();
     ~Tree();
 
-    void  AddLeaf(int key);
+    void  AddLeaf(std::pair<Key, Element> key);
     void  PrintInOrder();
-    void  PrintChildren(int key);
-    int   FindSmallest();
-    void  RemoveNode(int key);
-    int   FindNode(int key);
-    void  ReplaceSubtree(int u, int v);
-    Node* getNode(int key);
+    void  PrintChildren(Key key);
+    // int   FindSmallest();
+    void  RemoveNode(Key key);
+    Key   FindNode(Key key);
+    void  ReplaceSubtree(Key u, Key v);
+    Node* getNode(Key key);
     void  ClearTree();
     int   size();
     bool  isEmpty();
