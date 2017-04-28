@@ -24,7 +24,7 @@ class Tree {
     void  RemoveNodeHelper(NodePtr& n, NodePtr& node);
     Node* ReturnNode(Key key); //find
     void  RemoveSubtree(NodePtr& node);
-    Key   FindNodeHelper(Key key, Node* node);
+    bool  FindNodeHelper(Key key, Node* node);
     int   sizeHelper(Node* node);
     void  ReplaceSubtreeHelper(NodePtr& u, NodePtr& v, NodePtr& node);
     Node* getNodeHelper(Key key, Node* node);
@@ -39,7 +39,7 @@ class Tree {
     void  AddLeaf(std::pair<Key, Element> key);
     void  PrintInOrder();
     void  RemoveNode(Key key);
-    Key   FindNode(Key key);
+    bool  FindNode(Key key);
     void  ReplaceSubtree(Key u, Key v);
     Node* getNode(Key key);
     void  ClearTree();

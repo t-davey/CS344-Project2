@@ -1,3 +1,6 @@
+#ifndef TREE_CPP
+#define TREE_CPP
+
 #include <iostream>
 #include <cstdlib>
 #include "tree.h"
@@ -42,16 +45,16 @@ typename Tree<Key, Element>::Node* Tree<Key, Element>::getNodeHelper(Key key, No
     }
     //avoid segfaults
     if (node != nullptr) {
-      std::cerr << node->key.first << " was found." << std::endl;
+      //std::cerr << node->key.first << " was found." << std::endl;
       return node;
     }
     else {
-      std::cerr << key << " was not found." << std::endl;
+      //std::cerr << key << " was not found." << std::endl;
       return nullptr;
     }
   }
   else {
-    std::cerr << "The tree is empty." << std::endl;
+    //std::cerr << "The tree is empty." << std::endl;
     return nullptr;
   }
 }
@@ -70,37 +73,42 @@ void Tree<Key, Element>::AddLeafHelper(std::pair<Key, Element> key, Node* node) 
     root = CreateLeaf(key);
   }
   else {
-      bool done = false;
-      Node* q = node;
+    if (FindNode(key.first)){
+      Node * old = getNode(key.first);
+      old->key.second = key.second;
+    } else {
+        bool done = false;
+        Node* q = node;
 
-      while(!done) {
-        if (key.first < q->key.first) {
-          if (q->left == nullptr) {
-            q->left = CreateLeaf(key);
-            q->left->parent = q; //z->parent = q in psuedocode
-            std::cerr << q->key.first << " is " << q->left->key.first << "'s parent" << '\n';
-            //std::cerr << q->left->key.first << " is " << q->key.first << "'s parent" << '\n';
-            done = true;
+        while(!done) {
+          if (key.first < q->key.first) {
+            if (q->left == nullptr) {
+              q->left = CreateLeaf(key);
+              q->left->parent = q; //z->parent = q in psuedocode
+              //std::cerr << q->key.first << " is " << q->left->key.first << "'s parent" << '\n';
+              done = true;
+            }
+            else {
+              q = q->left;
+            }
           }
           else {
-            q = q->left;
+            if (q->right == nullptr) {
+              q->right = CreateLeaf(key);
+              q->right->parent = q;
+              //std::cerr << q->key.first << " is " << q->right->key.first << "'s parent" << '\n';
+              done = true;
+            }
+            else {
+              q = q->right;
           }
-        }
-        else {
-          if (q->right == nullptr) {
-            q->right = CreateLeaf(key);
-            q->right->parent = q;
-            std::cerr << q->key.first << " is " << q->right->key.first << "'s parent" << '\n';
-            done = true;
-          }
-          else {
-            q = q->right;
         }
       }
     }
   }
 }
 
+//debug printing function
 template <class Key, class Element>
 void Tree<Key,Element>::PrintInOrder() {
   PrintInOrderHelper(root);
@@ -113,7 +121,7 @@ void Tree<Key,Element>::PrintInOrderHelper(Node* node) {
     if (node->left != nullptr) {
       PrintInOrderHelper(node->left);
     }
-    std::cerr << node->key.first << " ";
+    std::cerr << "Key: " << node->key.first << "\nElement: " << node->key.second << std::endl;
     if (node->right != nullptr) {
       PrintInOrderHelper(node->right);
     }
@@ -149,6 +157,7 @@ typename Tree<Key,Element>::Node* Tree<Key,Element>::ReturnNodeHelper(Key key, N
   }
 }
 
+//debug printer for node testing
 template <class Key, class Element>
 void Tree<Key, Element>::NodeDebug(Key key) {
   Node* node = getNode(key);
@@ -166,10 +175,11 @@ void Tree<Key, Element>::NodeDebugHelper(Key key, Node* node) {
   }
 
   if (node != nullptr) {
-    std::cerr << "Current: " << node->key.first << '\n';
+    std::cerr << "Current Key: " << node->key.first << '\n';
+    std::cerr << "Current Element: " << node->key.second << '\n';
   }
   else {
-    std::cerr << "Current: nullptr" << '\n';
+    std::cerr << "Current Key: nullptr" << '\n';
   }
 
   if (node->left != nullptr) {
@@ -188,32 +198,6 @@ void Tree<Key, Element>::NodeDebugHelper(Key key, Node* node) {
   std::cerr << '\n';
 }
 
-/*
-template <class Key, class Element>
-Key Tree<Key,Element>::FindSmallest() {
-  return FindSmallestHelper(root);
-}
-*/
-
-/* from video, same as notes */
-/*
-template <class Key, class Element>
-Key Tree<Key,Element>::FindSmallestHelper(Node* node) {
-  if (root == nullptr) {
-    std::cerr << "The tree is empty.\n";
-
-    return -1000; //might need to be changed
-  }
-  else {
-    if (node->left != nullptr) {
-      return FindSmallestHelper(node->left);
-    }
-    else {
-      return node->key.first;
-    }
-  }
-}
-*/
 
 /* from notes */
 template <class Key, class Element>
@@ -274,7 +258,7 @@ void Tree<Key,Element>::ReplaceSubtree(Key u, Key v) {
   ReplaceSubtreeHelper(a, b, root);
 }
 
-//warning look over after sleep
+
 /* from notes */
 template <class Key, class Element>
 void  Tree<Key,Element>::ReplaceSubtreeHelper(NodePtr& u, NodePtr& v, NodePtr& node) {
@@ -306,20 +290,21 @@ void Tree<Key,Element>::RemoveSubtree(NodePtr& node) {
     RemoveSubtree(node->left);
     RemoveSubtree(node->right);
 
-    std::cerr << "Deleting the node containing key " << node->key.first << std::endl;
+    //std::cerr << "Deleting the node containing key " << node->key.first << std::endl;
     delete node;
     node = nullptr;
   }
 }
 
+//returns true if node with key is found, else false
 template <class Key, class Element>
-Key Tree<Key,Element>::FindNode(Key key) {
+bool Tree<Key,Element>::FindNode(Key key) {
   return FindNodeHelper(key, root);
 }
 
 /* from notes */
 template <class Key, class Element>
-Key Tree<Key,Element>::FindNodeHelper(Key key, Node* node) {
+bool Tree<Key,Element>::FindNodeHelper(Key key, Node* node) {
   if (node != nullptr) {
     while (node != nullptr && node->key.first != key) {
       if (key < node->key.first) {
@@ -331,25 +316,28 @@ Key Tree<Key,Element>::FindNodeHelper(Key key, Node* node) {
     }
     //avoid segfaults
     if (node != nullptr) {
-      std::cerr << node->key.first << " was found." << std::endl;
-      return node->key.first;
+      // std::cerr << node->key.first << " was found." << std::endl;
+      //return node->key.first;
+      return true;
     }
     else {
-      std::cerr << key << " was not found." << std::endl;
-      return -1000; //might need to be changed
+      // std::cerr << key << " was not found." << std::endl;
+      return false; //might need to be changed
     }
   }
   else {
-    std::cerr << "The tree is empty." << std::endl;
-    return -1000; //might need to be changed
+    // std::cerr << "The tree is empty." << std::endl;
+    return false; //might need to be changed
   }
 }
 
+//deletes all nodes in tree
 template <class Key, class Element>
 void Tree<Key,Element>::ClearTree() {
   RemoveSubtree(root);
 }
 
+//returns number of nodes in tree
 template <class Key, class Element>
 int Tree<Key,Element>::size() {
   return sizeHelper(root);
@@ -365,14 +353,17 @@ int Tree<Key,Element>::sizeHelper(Node *node) {
     }
 }
 
+//returns true if tree is empty
 template <class Key, class Element>
 bool Tree<Key,Element>::isEmpty() {
   if (root == nullptr) {
-    std::cerr << "The tree is empty." << std::endl;
+    //std::cerr << "The tree is empty." << std::endl;
     return true;
   }
   else {
-    std::cerr << "The tree is not empty." << std::endl;
+    //std::cerr << "The tree is not empty." << std::endl;
     return false;
   }
 }
+
+#endif
