@@ -2,32 +2,33 @@
 #define MAPITR_H
 
 #include <utility>
-#include "Tree.cpp"
+#include "tree.cpp"
 
 template <class Key, class Element>
 class MapItr {
 
 private:
-  struct Node {
-    std::pair<Key, Element> key;
-    Node* parent;
-    Node* left;
-    Node* right;
-  };
-
-  typedef Node* NodePtr;
-  Node* node;
-
-  MapItr<Key,Element> operator++(int i);
-  std::pair<Key,Element> operator*();
-  //friend bool operator==(MapItr<Key,Element> itr);
-  //friend bool operator!=(MapItr<Key,Element> itr);
+  Node<Key,Element>* next(Node<Key,Element>* node);
 
 public:
   MapItr();
-  MapItr(NodePtr& n);
-
-
+  MapItr(Node<Key,Element>* n);
+  std::pair<Key,Element> & operator*();
+  MapItr<Key,Element> operator++(int);
+  Node<Key,Element>* min(Node<Key,Element>* node);
+  bool operator==(MapItr<Key,Element> itr);
+  bool operator!=(MapItr<Key,Element> itr);
+  Node<Key,Element>* node;
 };
 
+template <class Key, class Element>
+inline std::pair<Key,Element> & MapItr<Key,Element>::operator*() {
+ return node->key;
+}
+
+template <class Key, class Element>
+MapItr<Key,Element> MapItr<Key,Element>::operator++(int) {
+  node = next(node);
+  return node;
+}
 #endif

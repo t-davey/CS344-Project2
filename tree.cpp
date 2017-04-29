@@ -16,8 +16,8 @@ Tree<Key, Element>::~Tree() {
 }
 
 template <class Key, class Element>
-typename Tree<Key, Element>::Node* Tree<Key, Element>::CreateLeaf(std::pair<Key, Element> key) {
-  Node* node   = new Node;
+Node<Key,Element>* Tree<Key, Element>::CreateLeaf(std::pair<Key, Element> key) {
+  Node<Key,Element>* node   = new Node<Key,Element>;
   node->key    = key;
   node->parent = nullptr;
   node->left   = nullptr;
@@ -28,12 +28,12 @@ typename Tree<Key, Element>::Node* Tree<Key, Element>::CreateLeaf(std::pair<Key,
 
 /* returns a node object from a given key */
 template <class Key, class Element>
-typename Tree<Key, Element>::Node* Tree<Key, Element>::getNode(Key key) {
-  getNodeHelper(key, root);
+Node<Key,Element>* Tree<Key, Element>::getNode(Key key) {
+  return getNodeHelper(key, root);
 }
 
 template <class Key, class Element>
-typename Tree<Key, Element>::Node* Tree<Key, Element>::getNodeHelper(Key key, Node* node) {
+Node<Key,Element>* Tree<Key, Element>::getNodeHelper(Key key, Node<Key,Element>* node) {
   if (node != nullptr) {
     while (node != nullptr && node->key.first != key) {
       if (key < node->key.first) {
@@ -68,17 +68,17 @@ void Tree<Key, Element>::AddLeaf(std::pair<Key, Element> key) {
 //node was root
 /* insert, from notes */
 template <class Key, class Element>
-void Tree<Key, Element>::AddLeafHelper(std::pair<Key, Element> key, Node* node) {
+void Tree<Key, Element>::AddLeafHelper(std::pair<Key, Element> key, Node<Key,Element>* node) {
   if (root == nullptr) {
     root = CreateLeaf(key);
   }
   else {
     if (FindNode(key.first)){
-      Node * old = getNode(key.first);
+      Node<Key,Element> * old = getNode(key.first);
       old->key.second = key.second;
     } else {
         bool done = false;
-        Node* q = node;
+        Node<Key,Element>* q = node;
 
         while(!done) {
           if (key.first < q->key.first) {
@@ -116,7 +116,7 @@ void Tree<Key,Element>::PrintInOrder() {
 
 /* from video */
 template <class Key, class Element>
-void Tree<Key,Element>::PrintInOrderHelper(Node* node) {
+void Tree<Key,Element>::PrintInOrderHelper(Node<Key,Element>* node) {
   if (root != nullptr) {
     if (node->left != nullptr) {
       PrintInOrderHelper(node->left);
@@ -132,13 +132,13 @@ void Tree<Key,Element>::PrintInOrderHelper(Node* node) {
 }
 
 template <class Key, class Element>
-typename Tree<Key,Element>::Node* Tree<Key,Element>::ReturnNode(Key key) {
+Node<Key,Element>* Tree<Key,Element>::ReturnNode(Key key) {
   return ReturnNodeHelper(key, root);
 }
 
 /* from notes */
 template <class Key, class Element>
-typename Tree<Key,Element>::Node* Tree<Key,Element>::ReturnNodeHelper(Key key, Node* node) {
+Node<Key,Element>* Tree<Key,Element>::ReturnNodeHelper(Key key, Node<Key,Element>* node) {
   if (node != nullptr) {
     if (node->key.first == key) {
       return node;
@@ -160,13 +160,13 @@ typename Tree<Key,Element>::Node* Tree<Key,Element>::ReturnNodeHelper(Key key, N
 //debug printer for node testing
 template <class Key, class Element>
 void Tree<Key, Element>::NodeDebug(Key key) {
-  Node* node = getNode(key);
+  Node<Key,Element>* node = getNode(key);
 
   NodeDebugHelper(key, node);
 }
 
 template <class Key, class Element>
-void Tree<Key, Element>::NodeDebugHelper(Key key, Node* node) {
+void Tree<Key, Element>::NodeDebugHelper(Key key, Node<Key,Element>* node) {
   if (node->parent != nullptr) {
     std::cerr << "Parent: " << node->parent->key.first << '\n';
   }
@@ -201,7 +201,7 @@ void Tree<Key, Element>::NodeDebugHelper(Key key, Node* node) {
 
 /* from notes */
 template <class Key, class Element>
-typename Tree<Key,Element>::Node* Tree<Key,Element>::min(Node* node) {
+Node<Key,Element>* Tree<Key,Element>::min(Node<Key,Element>* node) {
   if (root == nullptr) {
     std::cerr << "The tree is empty.\n";
 
@@ -236,7 +236,7 @@ void Tree<Key,Element>::RemoveNodeHelper(NodePtr& key, NodePtr& node) {
     ReplaceSubtreeHelper(key, key->left, node);
   }
   else {
-    Node* y = min(key->right);
+    Node<Key,Element>* y = min(key->right);
 
     if (y != key->right) {
       ReplaceSubtreeHelper(y, y->right, node);
@@ -269,7 +269,7 @@ void  Tree<Key,Element>::ReplaceSubtreeHelper(NodePtr& u, NodePtr& v, NodePtr& n
     }
   }
   else {
-    Node* q = u->parent;
+    Node<Key,Element>* q = u->parent;
     if (u->key.first == q->left->key.first) {
       q->left = v;
     }
@@ -304,7 +304,7 @@ bool Tree<Key,Element>::FindNode(Key key) {
 
 /* from notes */
 template <class Key, class Element>
-bool Tree<Key,Element>::FindNodeHelper(Key key, Node* node) {
+bool Tree<Key,Element>::FindNodeHelper(Key key, Node<Key,Element>* node) {
   if (node != nullptr) {
     while (node != nullptr && node->key.first != key) {
       if (key < node->key.first) {
@@ -344,7 +344,7 @@ int Tree<Key,Element>::size() {
 }
 
 template <class Key, class Element>
-int Tree<Key,Element>::sizeHelper(Node *node) {
+int Tree<Key,Element>::sizeHelper(Node<Key,Element> *node) {
     if (node != nullptr) {
       return (sizeHelper(node->left) + 1 + sizeHelper(node->right));
     }
@@ -363,6 +363,26 @@ bool Tree<Key,Element>::isEmpty() {
   else {
     //std::cerr << "The tree is not empty." << std::endl;
     return false;
+  }
+}
+
+template <class Key, class Element>
+Node<Key,Element>* Tree<Key,Element>::getRoot(){
+  return root;
+}
+
+template <class Key, class Element>
+Node<Key,Element>* Tree<Key,Element>::next(Node<Key,Element>* node){
+  if (node->right != nullptr){
+    return min(node->right);
+  } else {
+    Node<Key,Element>* parent = node->parent;
+    Node<Key,Element>* n = node;
+    while(parent != nullptr && parent->right == n){
+      n = parent;
+      parent = parent->parent;
+    }
+    return parent;
   }
 }
 

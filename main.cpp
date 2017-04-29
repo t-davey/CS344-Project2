@@ -3,6 +3,7 @@
 #include <ctime>
 #include "Map.cpp"
 
+
 using std::string;
 using std::pair;
 using std::cout;
@@ -11,7 +12,6 @@ using std::endl;
 int main(int argc, char **argv) {
   Map<int, string> m;
 
-  srand(time(NULL));
 
   int testKeys[10] = {1,5,9,7,2,4,1,6,3,7};
   string testElements[10] = {"aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii", "jj"};
@@ -27,10 +27,31 @@ int main(int argc, char **argv) {
    m.printTree(nonDupeTestKeys[i]);
   }
 
+  //++ operator
+  cout << "Begin Key: " << (*m.begin()).first << endl;
+  MapItr<int,string> mi = m.begin()++;
+  cout << "Next Key: " << (*mi).first << endl;
+
+
+  //== operator
+  cout << "__________________________________________" << endl;
+  cout << "Testing == and != on MapItr" << endl;
+  if (m.begin() == m.begin()){
+    cout << "Begin iterator is equal to begin." << endl;
+  }
+  if (m.begin() != mi){
+    cout << "m.begin() != m.begin()++." << endl;
+  } else {
+    cout << "m.begin() == m.begin()++." << endl;
+
+  }
+
+  Map<int,string> myMap(m);
+
+
   //erase(key)
   cout << "__________________________________________" << endl;
   cout << "Testing erase(key) on keys 1,7, and 6" << endl;
-  m.erase(1);
   m.erase(7);
   m.erase(6);
   m.printTree();
@@ -50,6 +71,18 @@ int main(int argc, char **argv) {
     cout << "Size: " << m.size() << endl;
     cout << "Empty?: No" << endl;  }
 
+  //begin()
+  cout << "__________________________________________" << endl;
+  cout << "Testing begin()" << endl;
+  cout << "Begin Key: " << (*m.begin()).first << endl;
+  cout << "Begin Element: " << (*m.begin()).second << endl;
+
+  //erase(itr)
+  cout << "__________________________________________" << endl;
+  cout << "Testing erase(itr) at begin()" << endl;
+  m.erase(m.begin());
+  m.printTree();
+
   //clear()
   cout << "__________________________________________" << endl;
   cout << "Testing clear()" << endl;
@@ -62,7 +95,7 @@ int main(int argc, char **argv) {
     cout << "Empty?: No" << endl;  }
 
 
-
+    //m.begin();
   // for (int i = 0; i < 10; i++) {
   //    m.printTree(test[i]);
   // }

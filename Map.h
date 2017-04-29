@@ -25,10 +25,10 @@ public:
   void swap(); //unfinished
   void insert(std::pair<Key,Element> pair);
   MapItr<Key,Element> begin();
-  MapItr<Key,Element> end(); //unfinished
+  MapItr<Key,Element> end();
   MapItr<Key,Element> find(Key k);
   void erase(Key k);
-  //void erase(itr i); //unfinished
+  void erase(MapItr<Key,Element> i);
   void printTree(Key k); //TESTING PRINT
   void printTree();
 };

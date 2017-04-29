@@ -12,6 +12,15 @@ Map<Key,Element>::~Map(){
   clear();
 }
 
+//copy constructor
+template <class Key, class Element>
+Map<Key,Element>::Map(const Map & m){
+  for (auto itr = m.begin(); itr != m.end(); itr++){
+    tree.AddLeaf((*itr));
+  }
+}
+
+
 //clears map's tree
 template <class Key, class Element>
 void Map<Key,Element>::clear() {
@@ -65,21 +74,36 @@ void Map<Key,Element>::erase(Key k) {
   tree.RemoveNode(k);
 }
 
+//removes node at itr i
+template <class Key, class Element>
+void Map<Key,Element>::erase(MapItr<Key,Element> i) {
+  tree.RemoveNode(((*i).first));
+}
+
 //testing function to check map's tree's nodes are correct
 template <class Key, class Element>
 void Map<Key,Element>::printTree(Key k) {
   tree.NodeDebug(k);
 }
 
+
 template <class Key, class Element>
 void Map<Key,Element>::printTree() {
   tree.PrintInOrder();
 }
 
-//returns an iterator pointing to the root node
+//returns an iterator pointing to the first node
 template <class Key, class Element>
-MapItr<Key,Element> Map<Key,Element>::begin(){
+MapItr<Key,Element> Map<Key,Element>::begin() {
+  Node<Key,Element>* min = tree.min(tree.getRoot());
 
+  return MapItr<Key,Element>(min);
+}
+
+//returns an iterator pointing past the last node
+template <class Key, class Element>
+MapItr<Key,Element> Map<Key,Element>::end(){
+  return MapItr<Key,Element>(nullptr);
 }
 
 //returns an iterator pointing to the found node, or end() if not found
